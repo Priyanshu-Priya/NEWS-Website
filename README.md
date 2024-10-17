@@ -41,7 +41,7 @@ You can view a live Demo of the site here: [Live Demo](https://priyanshu-priya.g
 ## 📚 How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/news.git
+   git clone https://github.com/Priyanshu-Priya/NEWS-Website.git
    cd news
    ```
 2. Replace the `API_KEY` in `script.js` with your own [NewsAPI Key](https://newsapi.org/).
