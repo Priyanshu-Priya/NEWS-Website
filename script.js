@@ -40,7 +40,7 @@ function loadTemplate(count) {
         // newsImg.src = "placeholder-image.jpg"; 
         newsTitle.innerHTML = "Loading articles...";
         // newsSource.innerHTML = "Sample Source";
-        newsDesc.innerHTML = "This is a sample article. Unfortunately, we are unable to fetch live news data at this time. If you'd like to enable live updates, please follow the instructions in the GitHub repository.";
+        newsDesc.innerHTML = `This is a sample article.  Unfortunately, we are unable to fetch live news data at this time because GitHub Pages doesn't support API calls. See the GitHub repo  to enable live updates locally. `;
 
         cardClone.firstElementChild.addEventListener("click", () => {
             window.open("https://github.com/Priyanshu-Priya/NEWS-Website", "_blank"); // Replace with your GitHub link
