@@ -1,4 +1,4 @@
-const API_KEY = "5f658b925ca54c0dacfe00bd4b45ce68"
+const API_KEY = "0ae12cc4463442dabff38f365bf19674"
 const url = "https://newsapi.org/v2/everything?q="
 const sidebarCheckbox = document.getElementById('sidebar-active'); 
 
