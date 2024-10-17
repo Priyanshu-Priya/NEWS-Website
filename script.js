@@ -1,12 +1,54 @@
-const API_KEY = "5f658b925ca54c0dacfe00bd4b45ce68"
+const API_KEY = "0ae12cc4463442dabff38f365bf19674"
 const url = "https://newsapi.org/v2/everything?q="
 const sidebarCheckbox = document.getElementById('sidebar-active'); 
 
 window.addEventListener('load', ()=> fetchNews("India"));
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apikey=${API_KEY}`);
-    const data = await res.json();
-    bindData(data.articles)
+    try {
+        const res = await fetch(`${url}${query}&apikey=${API_KEY}`);
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        if (data.articles) {
+            bindData(data.articles);
+        } else {
+            loadTemplate(10); // Load the template if no articles are found
+        }
+    } catch (error) {
+        console.error("Error fetching news:", error);
+        loadTemplate(16); // Load the template 16 times on error
+    }
+}
+
+function loadTemplate(count) {
+    const cardsContainer = document.getElementById('cards-container');
+    const newsCardTemplate = document.getElementById('template-news-card');
+
+    // Clear existing content
+    cardsContainer.innerHTML = '';
+
+    // Load the template multiple times
+    for (let i = 0; i < count; i++) {
+        const cardClone = newsCardTemplate.content.cloneNode(true);
+        const newsImg = cardClone.querySelector("#news-img");
+        const newsTitle = cardClone.querySelector("#news-title");
+        const newsSource = cardClone.querySelector("#news-source");
+        const newsDesc = cardClone.querySelector("#news-desc");
+
+        // Set placeholder text and image
+        // newsImg.src = "placeholder-image.jpg"; 
+        newsTitle.innerHTML = "Loading articles...";
+        // newsSource.innerHTML = "Sample Source";
+        newsDesc.innerHTML = "This is a sample article. Unfortunately, we are unable to fetch live news data at this time. If you'd like to enable live updates, please follow the instructions in the GitHub repository.";
+
+        cardClone.firstElementChild.addEventListener("click", () => {
+            window.open("https://github.com/Priyanshu-Priya/NEWS-Website", "_blank"); // Replace with your GitHub link
+        });
+
+
+        cardsContainer.appendChild(cardClone);
+    }
 }
 
 function reload(){
@@ -28,21 +70,24 @@ function bindData(articles){
   
 }
 
-function fillDataInCard(cardClone,article) {
-    const newsImg = cardClone.querySelector("#news-img")
-    const newsTitle = cardClone.querySelector("#news-title")
-    const newsSource = cardClone.querySelector("#news-source")
-    const newsDesc = cardClone.querySelector("#news-desc")
+function fillDataInCard(cardClone, article) {
+    const newsImg = cardClone.querySelector("#news-img");
+    const newsTitle = cardClone.querySelector("#news-title");
+    const newsSource = cardClone.querySelector("#news-source");
+    const newsDesc = cardClone.querySelector("#news-desc");
 
     newsImg.src = article.urlToImage;
     newsTitle.innerHTML = article.title;
-    newsDesc.innerHTML= article.description;
-    const date = new Date(article.publishedAt).toLocaleString("en-US",{
-        timeZone:"Asia/Jakarta"
-    } );
+    newsDesc.innerHTML = article.description;
+
+    const date = new Date(article.publishedAt).toLocaleString("en-US", {
+        timeZone: "Asia/Jakarta"
+    });
     newsSource.innerHTML = `${article.source.name} • ${date}`;
+
+    // Open article link when card is clicked
     cardClone.firstElementChild.addEventListener("click", () => {
-        window.open(article.url, "_blank")
+        window.open(article.url, "_blank");
     });
 }
 
