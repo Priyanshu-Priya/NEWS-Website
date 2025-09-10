@@ -1,11 +1,9 @@
-const API_KEY = "0ae12cc4463442dabff38f365bf19674"
-const url = "https://newsapi.org/v2/everything?q="
 const sidebarCheckbox = document.getElementById('sidebar-active'); 
 
 window.addEventListener('load', ()=> fetchNews("India"));
 async function fetchNews(query) {
     try {
-        const res = await fetch(`${url}${query}&apikey=${API_KEY}`);
+        const res = await fetch(`/.netlify/functions/get-news?q=${query}`);
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
